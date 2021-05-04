@@ -47,26 +47,33 @@ public class GamerManager extends BaseEntityRepository<Gamer> implements GamerSe
 	}
 
 	@Override
+	public void buyGame(Gamer gamer, Game game) {
+		Calendar now = Calendar.getInstance();
+		var month = now.get(Calendar.MONTH) + 1;
+
+		System.out.println("\nNEW PURCHASE");
+		System.out.println("---------------------------------");
+		System.out.println("Game: " + game.getGameName());
+		System.out.println("Price: " + game.getGamePrice() + "$");
+		System.out.println("Purchased at: " + now.get(Calendar.YEAR) + "/" + month + "/" + now.get(Calendar.DATE) + " " + now.get(Calendar.HOUR_OF_DAY) + ":" + now.get(Calendar.MINUTE) + ":" + now.get(Calendar.SECOND));
+		System.out.println("---------------------------------");
+		System.out.println("Purchased by: " + gamer.getFirstName() + " " + gamer.getLastName());
+	}
+
+	@Override
 	public void buyGame(Gamer gamer, Game game, Campaign campaign) {
 		Calendar now = Calendar.getInstance();
 		var month = now.get(Calendar.MONTH) + 1;
 		
 		var gamePrice = game.getGamePrice();
-		
-		var priceMessage = "Price: " + gamePrice + "$";
-		var titleMessage = "\nNEW PURCHASE";
-		
-		if(campaign != null) {
-			var discountAmount = (campaign.getPercentageOfDiscount()*game.getGamePrice())/100;
-			gamePrice = game.getGamePrice() - discountAmount;
-			priceMessage = "Price ("+ campaign.getPercentageOfDiscount() +"% | +"+discountAmount+"$): " + gamePrice + "$ paid" + " (Discountless: " + game.getGamePrice() + "$)";
-			titleMessage +=  " | " + campaign.getCampaignName();
-		}
-		
-		System.out.println(titleMessage);
+
+		var discountAmount = (campaign.getPercentageOfDiscount()*game.getGamePrice()) / 100;
+		gamePrice = game.getGamePrice() - discountAmount;
+
+		System.out.println("\nNEW PURCHASE | " + campaign.getCampaignName());
 		System.out.println("---------------------------------");
 		System.out.println("Game: " + game.getGameName());
-		System.out.println(priceMessage);
+		System.out.println("Price ("+ campaign.getPercentageOfDiscount() +"% | +"+discountAmount+"$): " + gamePrice + "$ paid" + " (Discountless: " + game.getGamePrice() + "$)");
 		System.out.println("Purchased at: " + now.get(Calendar.YEAR) + "/" + month + "/" + now.get(Calendar.DATE) + " " + now.get(Calendar.HOUR_OF_DAY) + ":" + now.get(Calendar.MINUTE) + ":" + now.get(Calendar.SECOND));
 		System.out.println("---------------------------------");
 		System.out.println("Purchased by: " + gamer.getFirstName() + " " + gamer.getLastName());

@@ -54,7 +54,7 @@ public class Main {
 		campaignManager.getDetailsOfCampaign(campaign);
 		
 		System.out.println("\n///////////////////////\n");
-		gamerManager.buyGame(gamer1, game1, campaign);
+		gamerManager.buyGame(gamer1, game1);
 	}
 
 }
